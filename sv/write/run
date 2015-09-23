@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#sv start socklog-unix || exit 1
+
+source /etc/envvars
+env
+
+export TP_KFK_HOST="${TP_KFK_HOST:=kafka}"
+export TP_KFK_PORT="${TP_KFK_PORT:=2181}"
+export TP_KFK_CLIENT="${TP_KFK_CLIENT:=telepat-producer}"
+
+export TP_REDIS_HOST="${TP_REDIS_HOST:=redis}"
+export TP_REDIS_PORT="${TP_REDIS_PORT:=6379}"
+
+export TP_ES_HOST="${TP_ES_HOST:=elasticsearch}"
+export TP_ES_PORT="${TP_ES_PORT:=9200}"
+export TP_ES_INDEX="${TP_ES_INDEX:=default}"
+export TP_MAIN_DB="${TP_MAIN_DB:=ElasticSearch}"
+
+exec 2>&1
+exec node /telepat-worker/index.js -t write -i 0
